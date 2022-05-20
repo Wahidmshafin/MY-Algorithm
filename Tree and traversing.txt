@@ -1,0 +1,152 @@
+	#include<iostream>
+#include<string>
+#include<algorithm>
+#include<cstdlib>
+using namespace std;
+class node
+{
+public:
+	int data;
+	node* left, *right;
+};
+node* root=NULL;
+void creation(int v)
+{
+	node* srt = new node();
+	node* tmp = root;
+	srt->data = v;
+	if (root == NULL)
+		root = srt;
+	else
+	{
+		while (1)
+		{
+			if (tmp->data >= v)
+			{
+				if (tmp->left == NULL)
+				{
+					tmp->left = srt;
+					break;
+				}
+				else
+					tmp = tmp->left;
+			}
+			else
+			{
+				if (tmp->right == NULL)
+				{
+					tmp->right = srt;
+					break;
+				}
+				else
+					tmp = tmp->right;
+			}
+		}
+	}
+}
+void inorder(node* n)
+{
+	if (n == NULL)
+		return;
+	else
+	{
+		inorder(n->left);
+		cout << n->data << " ";
+		inorder(n->right);
+	}
+}
+void preorder(node* n)
+{
+	if (n == NULL)
+	{
+		return;
+	}
+	else
+	{
+		cout << n->data << " ";
+		preorder(n->left);
+		preorder(n->right);
+	}
+}
+void postorder(node* n)
+{
+	if (n == NULL)
+	{
+		return;
+	}
+	else
+	{
+		preorder(n->left);
+		preorder(n->right);
+		cout << n->data << " ";
+	}
+}
+bool search(int v)
+{
+	node* srt = root;
+	while (1)
+	{
+		if (srt == NULL)
+			return false;
+		else if (srt->data==v)
+			return true;
+		else
+		{
+			if (srt->data > v)
+				srt = srt->left;
+			else
+				srt = srt ->right;
+		}
+	}
+}
+void del(node* n)
+{
+	node* srt = n;
+	if (srt == NULL)
+		return;
+	del(srt->left);
+	del(srt->right);
+	delete(srt);
+}
+node* lca(node* srt, int a, int b)
+{
+	if (srt == NULL)
+		return NULL;
+	if (srt->data > a && srt->data > b)
+		return lca(srt->left, a, b);
+	if(srt->data<a && srt->data<b)
+	 	return lca(srt->right, a, b);
+	return srt;
+}
+int height(node* srt)
+{
+	if (srt == NULL)
+		return -1;
+	else
+		return max(height(srt->left) + 1, height(srt->right) + 1);
+}
+int main()
+{
+	int a, b, c, d, i, j, k;
+	cin >> a;
+	for (i = 0; i < a; i++)
+	{
+		b = rand() % 17;
+		cout << b << " ";
+		creation(b);
+	}
+	cout << endl;
+	inorder(root);
+	cout << endl;
+	cin >> a;
+	for (i = 0; i < a; i++)
+	{
+		cin >> b;
+		if (search(b))
+			cout << "Found it" << endl;
+		else
+			cout << "Didn't found it" << endl;
+	}
+	del(root);
+	return 0;
+}

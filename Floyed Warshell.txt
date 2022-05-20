@@ -1,0 +1,23 @@
+vector<vector<ll>> adjl(n, vector<ll>(n, inf));
+    vector<vector<bool>> trc(n, vector<bool>(n, false)); // for finding path between i->j
+    for (i = 0; i < m; i++)
+    {
+        cin >> a >> b >> c;
+        adjl[a][b] = c;
+        //trc[a][b] = true;
+    }
+    for (i = 0; i < n; i++)
+    {
+        adjl[i][i] = 0;
+        //trc[i][i] = true;
+    }
+for (k = 1; k <= n; k++)
+        {
+            for (i = 1; i <= n; i++)
+            {
+                for (j = 1; j <= n; j++)
+                {
+                    adjl[i][j] = min(adjl[i][j], adjl[i][k] + adjl[k][j]);
+                }
+            }
+        }

@@ -1,0 +1,26 @@
+vll v(200);
+ll si=0;
+void upshift(ll pos)
+{
+	ll i = pos;
+	while (i > 1 && v[i] > v[i / 2])
+	{
+		swap(v[i], v[i / 2]);
+		i = i / 2;
+	}
+}
+void downshift(ll pos, ll size)
+{
+	ll i = pos;
+	while (2 * i <= size)
+	{
+		ll j = (v[2 * i] > v[min(2 * i + 1, size)]) ? 2 * i : min(2 * i + 1, size);
+		if (v[j] > v[i])
+		{
+			swap(v[i], v[j]);
+			i = j;
+		}
+		else
+			break;
+	}
+}

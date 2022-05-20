@@ -1,0 +1,91 @@
+template <typename T>
+class Binary_Heap
+{
+public:
+    vector<T> heap;
+    ll hsize;
+
+private:
+    ll lim;
+    ll parents(ll n)
+    {
+        return n / 2;
+    }
+    ll left(ll n)
+    {
+        return 2 * n;
+    }
+    ll right(ll n)
+    {
+        return 2 * n + 1;
+    }
+    void rhp_upwords(ll node)
+    {
+        if (node == 1)
+        {
+            return;
+        }
+        ll par = parents(node);
+        if (heap[par] < heap[node])
+        {
+            swap(heap[par], heap[node]);
+            rhp_upwords(par);
+        }
+    }
+    void rhp_downwords(ll node)
+    {
+        ll l = left(node);
+        ll r = right(node);
+        ll biggest = node;
+        if (l <= hsize)
+            biggest = (heap[biggest] > heap[l]) ? biggest : l;
+        if (r <= hsize)
+            biggest = (heap[biggest] > heap[r]) ? biggest : r;
+        if (biggest != node)
+        {
+            swap(heap[biggest], heap[node]);
+            rhp_downwords(biggest);
+        }
+    }
+
+public:
+    Binary_Heap(ll n)
+    {
+        T b;
+        heap.assign(n + 1, b);
+        hsize = 0;
+        lim = n + 1;
+    }
+    void insert(T val)
+    {
+        hsize++;
+        if (hsize == lim)
+        {
+            T a;
+            heap.push_back(a);
+            lim++;
+        }
+        heap[hsize] = val;
+        rhp_upwords(hsize);
+    }
+    void deletion(ll node)
+    {
+        swap(heap[node], heap[hsize]);
+        hsize--;
+        rhp_downwords(node);
+    }
+    void pop()
+    {
+        deletion(1);
+    }
+    void update(ll node, T val) // update the node with this new value.
+    {
+        heap[node] = val;
+        rhp_upwords(node);
+        rhp_downwords(node);
+    }
+    T top()
+    {
+        return heap[1];
+    }
+};

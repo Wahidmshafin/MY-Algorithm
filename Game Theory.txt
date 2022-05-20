@@ -1,0 +1,16 @@
+If I can reach a losing state then it is
+a winning state.
+
+Nim Game: If the XOR value of all piles is 0 then
+second player wins.
+
+Bogus Nim: adding stone does not affect result.
+
+Misere Nim: If last move loses then special case:
+
+If all pile contains single stone.
+
+Staircase Nim: only Odd position Matters.
+
+Grundy Number: G(u) = 0 if terminal state
+G(u) = mex of all state from u.

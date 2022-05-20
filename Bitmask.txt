@@ -1,0 +1,5 @@
+1) a|=(1<<j)  // for adding a value to j'th position of bitmask
+2) a&=~(1<<j) // for removing a value from j'th position of bitmask
+3) T=a&(1<<j) // for checking if the j'th value is available.
+4) a^= (1<<j) // fliping the j'th position value 
+5) T= (a& (-a)) to get the least significant value 

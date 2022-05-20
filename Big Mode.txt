@@ -1,0 +1,14 @@
+long long int bm(long long int b, long long int p, long long int m)
+{
+	long long int i, j, k;
+	b = b % m;
+	if (p == 0)
+		return 1;
+	else
+		j = bm(b, p / 2, m);
+	j = (j * j) % m;
+	if (p % 2)
+		return (j * b) % m;
+	return j;
+
+}

@@ -1,0 +1,40 @@
+/*Fenwick tree/Binary Index Tree
+	For One base index*/
+vll bi, bj;
+ll si;
+// bi for range update point queries
+// bj for range update and range queries
+void update(ll l, ll r, ll va)
+{
+	ll i, j, k;
+	
+	for (i = l; i <= si; i += i & -i)
+	{
+		bi[i] += va; // for range update and point queries
+		bj[i] += (va * (l - 1));//for range update and range queries
+	}
+	for (j = r + 1; j <= si; j += j & -j)
+	{
+		bi[j] -= va;// for range update and point queries
+		bj[j] -= (r * va); // for range update and range queries
+	}
+	
+}
+ll query(ll id)//for point queries
+{
+	ll i, sum=0;
+	for (i = id; i > 0; i -= i & -i)
+	{
+		sum += bi[i];
+	}
+	return sum;
+}
+ll rquery(ll id)// for range queries
+{
+	ll i, sum = 0;
+	for (i = id; i > 0; i -= i & -i)
+	{
+		sum += bj[i];
+	}
+	return query(id) * id - sum;
+}

@@ -1,0 +1,56 @@
+vector<ll> v[100005];
+vector<bool>mark;
+ll co = 0;
+vll d, par, low;  // d is the discover time
+                // low is the lowest discover time of its child
+//vector<pair<ll, ll>> ans;
+void dfs_tree(ll node)
+{
+    co++;
+    d[node] = co;
+    low[node] = co;
+    ll i, j, k;
+    for (i = 0; i < v[node].size(); i++)
+    {
+        if (par[node] == v[node][i])
+        {
+            continue;
+        }
+        else
+        {
+            if (d[v[node][i]] == 0)// if its discover time is 0, it hasn't been discovered yet
+            {
+                par[v[node][i]] = node;
+                dfs_tree(v[node][i]);
+                low[node] = min(low[node], low[v[node][i]]);
+                if (low[v[node][i]] >= d[node] && node != 0)
+                {
+                    mark[node] = true;// for bridge, count the number of bridge
+                }
+            }
+            else  //It is a backedge
+            {
+                low[node] = min(low[node], d[v[node][i]]);
+            }
+        }
+    }
+    /*This part is for Articulation point.
+For articulation point , low[v[node][i]]>=d[node]
+and for bridge, low[v[node][i]]>d[node]
+*/
+    if (node == 0)
+    {
+        ll child = 0;
+        f(i, v[0].size())
+        {
+            if (par[v[0][i]] == node)
+            {
+                child++;
+            }
+        }
+        if (child > 1)
+        {
+            mark[0] = true;
+        }
+    }
+}

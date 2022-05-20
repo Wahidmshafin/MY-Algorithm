@@ -1,0 +1,41 @@
+void qsort(long long int l, long long int r)
+{
+	if (l < 0 || r < 0 || l >= v.size() || r >= v.size())
+		return;
+	long long int a, b, c, i, j, k, n, m;
+	while (l < r)
+	{
+		i = l;
+		j = l;
+		k = l;
+		m = v[r];
+		while (i < r)
+		{
+			if (v[i] < m)
+			{
+				swap(v[j], v[k]);
+				if(i!=j)
+				swap(v[k], v[i]);
+				k++;
+				j++;
+			}
+			else if (v[i] == m)
+			{
+				swap(v[j], v[i]);
+				j++;
+			}
+			i++;
+		}
+		swap(v[j], v[r]);
+		if (k - l < r - j)
+		{
+			qsort(l, k-1);
+			l = j + 1;
+		}
+		else
+		{
+			qsort(j + 1, r);
+			r = k - 1;
+		}
+	}
+}

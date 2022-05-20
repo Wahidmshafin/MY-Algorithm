@@ -1,0 +1,93 @@
+class Segment_Tree // left subtree is 2*node and right subtree is 2*node+1
+{
+public:
+    vll tree, lazy, v;// v is my given vector and it is 1 based
+    ll l, r;
+    Segment_Tree(ll n)
+    {
+        tree.assign(4 * n + 4, 0);
+        lazy.assign(4 * n + 4, 0);
+    }
+
+    void Creation(ll n)
+    {
+        for (ll i = 1; i <= n; i++)
+        {
+            insert(1, 1, n, i);
+        }
+    }
+
+    void insert(ll node, ll b, ll e, ll id)
+    {
+        if (id < b || id > e)
+        {
+            return;
+        }
+        else if (b == id && e == id)
+        {
+            tree[node] = v[id];
+            return;
+        }
+        ll mid = (b + e) / 2;
+        insert(2 * node, b, mid, id);
+        insert(2 * node + 1, mid + 1, e, id);
+        tree[node] = tree[2 * node] + tree[2 * node + 1];
+    }
+
+    void update(ll node, ll b, ll e, ll val) // initialy b=1 and e= sz . sz means size of vector.
+    {
+        if (lazy[node] != 0)
+        {
+            tree[node] += (e - b + 1) * lazy[node];
+            if (b != e)
+            {
+                lazy[2 * node] += lazy[node];
+                lazy[2 * node + 1] += lazy[node];
+            }
+            lazy[node] = 0;
+        }
+        if (b > r || e < l)
+        {
+            return;
+        }
+        if (b >= l && e <= r)
+        {
+            tree[node] += (e - b + 1) * val;
+            if (b != e)
+            {
+                lazy[2 * node] += val;
+                lazy[2 * node + 1] += val;
+            }
+            return;
+        }
+        ll mid = (b + e) / 2;
+        update(2 * node, b, mid, val);
+        update(2 * node + 1, mid + 1, e, val);
+        tree[node] = tree[2 * node] + tree[2 * node + 1];
+    }
+
+    ll query(ll node, ll b, ll e)
+    {
+        if (b > r || e < l)
+        {
+            return 0;
+        }
+        if (lazy[node] != 0)
+        {
+            tree[node] += (e - b + 1) * lazy[node];
+            if (b != e)
+            {
+                lazy[2 * node] += lazy[node];
+                lazy[2 * node + 1] += lazy[node];
+            }
+            lazy[node] = 0;
+        }
+        if (b >= l && e <= r)
+        {
+            return tree[node];
+        }
+        ll mid = (b + e) / 2;
+
+        return query(2 * node, b, mid) + query(2 * node + 1, mid + 1, e);
+    }
+};

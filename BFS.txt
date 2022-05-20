@@ -1,0 +1,31 @@
+cin >> m >> n;
+			//cout << "ok" << endl;
+			if (ans[m-1][n-1] == -1)
+			{
+				m(d);
+				memset(vis, false, sizeof(vis));
+				q.push(m-1);
+				vis[m-1] = true;
+				while (!q.empty())
+				{
+					u = q.front();
+					q.pop();
+					for (i = 0; i < v[u].size(); i++)
+					{
+						if (vis[v[u][i]] == false)
+						{
+							vis[v[u][i]] = true;
+							d[v[u][i]] = d[u] + 1;
+							q.push(v[u][i]);
+						}
+					}
+					
+				}
+				for (i = 0; i < 20; i++)
+				{
+					ans[m-1][i] = d[i];
+					ans[i][m - 1] = d[i];
+				}
+			}
+			
+			cout << m << " to " << n << ": " << ans[m - 1][n - 1] << endl;

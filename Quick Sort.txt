@@ -1,0 +1,33 @@
+vector<long long int>u, v;
+void qsort(long long int l, long long int r)
+{
+	if (l < 0 || r < 0 || l >= v.size() || r >= v.size())
+		return;
+	long long int i, j, k, n, m;
+	while (l < r)
+	{
+		i = l;
+		j = l;
+		m = v[r];
+		while (i < r)
+		{
+			if (v[i] < m)
+			{
+				swap(v[j], v[i]);
+				j++;
+			}
+			i++;
+		}
+		swap(v[j], v[r]);
+		if (j - l < r - j)
+		{
+			qsort(l, j - 1);
+			l = j + 1;
+		}
+		else
+		{
+			qsort(j + 1, r);
+			r = j - 1;
+		}
+	}
+}

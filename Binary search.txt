@@ -1,0 +1,35 @@
+											****Lower Bound****
+
+The lower_bound() method in C++ is used to return an iterator pointing to the first element in the range [first, last) which has a value not less than val. This means that the function returns an iterator pointing to the next smallest number just greater than or equal to that number. If there are multiple values that are equal to val, lower_bound() returns the iterator of the first such value.
+
+Vector contains : 10 20 30 30 30 40 50
+
+lower_bound for element 30 at position : 2
+lower_bound for element 35 at position : 5
+lower_bound for element 55 at position : 7
+
+CODE:
+
+auto it=lower_bound(v.begin(), v.end(), 30);
+cout<<it-v.begin();
+
+
+
+											****Upper Bound****
+
+upper_bound() is a standard library function in C++ defined in the header . It returns an iterator pointing to the first element in the range [first, last) that is greater than value, or last if no such element is found.
+
+Input : 10 20 30 30 40 50
+Output : upper_bound for element 30 is at index 4
+
+Input : 10 20 30 40 50
+Output : upper_bound for element 45 is at index 4
+
+Input : 10 20 30 40 50
+Output : upper_bound for element 60 is at index 5
+
+
+CODE:
+
+auto it= upper_bound(v.begin(), v.end(), 35);
+cout<<it-v.begin();

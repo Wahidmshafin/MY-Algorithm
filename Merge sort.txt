@@ -1,0 +1,212 @@
+#include<iostream>
+#include<algorithm>
+#include<cstdlib>
+using namespace std;
+SIR ER LIKHE DEOA:::::::
+void merge(int a[], int s, int e)
+{
+	int mid = (s + e) / 2, i, j, k, l,tmp[100];
+	i = s;
+	j = mid + 1;
+	k = s;
+	while (i <= mid && j <= e)
+	{
+		if (a[i] > a[j])
+		{
+			tmp[k++] = a[j++];
+		}
+		else
+			tmp[k++] = a[i++];
+	}
+	while (i <= mid)
+		tmp[k++] = a[i++];
+	while (j <= e)
+		tmp[k++] = a[j++];
+	for (l = s; l <= e; l++)
+	{
+		a[l] = tmp[l];
+	}
+}
+void mergesort(int a[], int s, int e)
+{
+	if (s == e)
+		return;
+	int mid = (s + e) / 2;
+	mergesort(a, s, mid);
+	mergesort(a, mid + 1, e);
+	merge(a, s, e);
+}
+int main()
+{
+	int a[100], b, c, d, i, j, k;
+	cin >> b;
+	for (i = 0; i < b; i++)
+	{
+		cin >> a[i];
+	}
+	mergesort(a, 0, b - 1);
+	for(i=0;i<b;i++)
+		cout<<a[i]<<" ";
+	cout << endl;
+	return 0;
+}
+MY CONTEST::::::
+void merge(ll ar[], ll b, ll m, ll e)
+{
+	ll i, j, k;
+	ll n1 = m - b + 1;
+	ll n2 = e - m;
+	ll t[10], tt[10];
+	f(i, n1)
+	{
+		t[i] = ar[b + i];
+	}
+	f(j, n2)
+	{
+		tt[j] = ar[m + j + 1];
+	}
+	i = 0;
+	j = 0;
+	k = b;
+	while (i < n1 && j < n2)
+	{
+		if (t[i] < tt[j])
+		{
+			ar[k] = t[i];
+			i++;
+		}
+		else
+		{
+			ar[k] = tt[j];
+			j++;
+		}
+		k++;
+	}
+	while (i < n1)
+	{
+		ar[k] = t[i];
+		i++;
+		k++;
+	}
+	while (j < n2)
+	{
+		ar[k] = tt[j];
+		j++;
+		k++;
+	}
+}
+void msort(ll ar[], ll b, ll e)
+{
+	if (b < e)
+	{
+		ll m = (b + e) / 2;
+		msort(ar, b, m);
+		msort(ar, m + 1, e);
+		merge(ar, b, m, e);
+	}
+}
+Merge sort in link list:::::
+
+#include<iostream>
+#include<cstdlib>
+#include<algorithm>
+using namespace std;
+class node
+{
+public:
+	int data;
+	node* next;
+};
+node* head = NULL;
+node* pnode;
+void creation(int v)
+{
+	node* nnode = new node();
+	nnode->data = v;
+	nnode->next = NULL;
+	if (head == NULL)
+	{
+		head = nnode;
+		pnode = nnode;
+	}
+	else
+	{
+		pnode->next = nnode;
+		pnode = nnode;
+	}
+}
+void print(node* head)
+{
+	node* srt = head;
+	while (srt != NULL)
+	{
+		cout << srt->data << " ";
+		srt = srt->next;
+	}
+	cout << endl;
+}
+void split(node* start, node** ll1, node** ll2)
+{
+	node* fast = start->next;
+	node* slow = start;
+	while (fast != NULL)
+	{
+		fast = fast->next;
+		if (fast != NULL)
+		{
+			slow = slow->next;
+			fast = fast->next;
+		}
+	}
+	*ll1 = start;
+	*ll2 = slow->next;
+	slow->next = NULL;
+}
+node* merge(node* ll1, node* ll2)
+{
+	node* newhead = NULL;
+	if (ll1 == NULL)
+		return ll2;
+	else if (ll2 == NULL)
+		return ll1;
+	if (ll1->data <= ll2->data)
+	{
+		newhead = ll1;
+		newhead->next = merge(ll1->next,ll2);
+	}
+	else
+	{
+		newhead = ll2;
+		newhead->next = merge(ll1, ll2->next);
+	}
+	//print(newhead);
+	return newhead;
+}
+
+void mergesort(node** head)
+{
+	node* start = *head;
+	node* ll1, * ll2;
+	if (start == NULL || start->next == NULL)
+	{
+		return;
+	}
+	split(start, &ll1, &ll2);
+	mergesort(&ll1);
+	mergesort(&ll2);
+	*head=merge(ll1, ll2);
+	return;
+}
+int main()
+{
+	int i, j, k, m, a, b;
+	cin >> a;
+	for (i = 0; i < a; i++)
+	{
+		creation(rand() % 30);
+	}
+	print(head);
+	mergesort(&head);
+	print(head);
+	
+}

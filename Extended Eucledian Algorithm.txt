@@ -1,0 +1,32 @@
+int exgcd(ll a, ll b, ll *c, ll *d)
+{
+	if (a == 0)//x = (((x % m) + m) % m);[this part must be done]
+	{
+		*c = 0;
+		*d = 1;
+		return b;
+	}
+	ll x, y;
+	ll gcd = exgcd(b % a, a, &x, &y);
+	*c = y - (b / a) * x;
+	*d = x;
+	return gcd;
+}
+#define ll long long int
+int main()
+{
+	string s;
+	int a, b[20], c, d, i = 0, j = 0, k, m, x, y, t;
+	cin >> t;
+	while (t--)
+	{
+		cin >> a >> m;
+		k = exgcd(a, m, &x, &y);
+		//Eucledian algorithm. If k=1, then we can find moduler inverse
+		//Here x is the moduler inverse of   a   with mod m; 
+		//And y is the moduler inverse of   m   with mod   a;
+		x = (((x % m) + m) % m);[this part must be done]
+		cout << k << " " << x << " " << y << endl;
+	}
+	return 0;
+}

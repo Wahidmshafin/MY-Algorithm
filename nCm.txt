@@ -1,0 +1,13 @@
+vll dp[1001];
+    dp[0].push_back(1);
+    dp[1].push_back(1);
+    dp[1].push_back(1);
+    for (i = 2; i <= 10; i++)
+    {
+        dp[i].push_back(1);
+        for (j = 1; j < i; j++)
+        {
+            dp[i].push_back((dp[i - 1][j - 1] + dp[i - 1][j]) % mod);
+        }
+        dp[i].push_back(1);
+    }

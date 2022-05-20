@@ -1,0 +1,33 @@
+//DSU call is already written by you
+//The vector edges must be sorteds
+
+ll Kruskal(ll node, vector<pair<ll, pair<ll, ll>>> edges)
+{
+    DSU dsu(node);
+    ll i = 0;
+    ll no_edge = 0;
+    ll cost = 0;
+    while (no_edge < node - 1 && i < edges.size())
+    { 
+        ll u = edges[i].second.first;
+        ll v = edges[i].second.second;
+        ll co = edges[i].first;
+        i++;
+        if (dsu.find_root(u) == dsu.find_root(v))
+        {
+            continue;
+        }
+        else
+        {
+            dsu.add(u, v);
+            cost += co;
+        }
+        no_edge++;
+    }
+    if (no_edge < node - 1)
+    {
+        return inf;
+    }
+    else
+        return cost;
+}

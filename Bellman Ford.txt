@@ -1,0 +1,41 @@
+cin >> n >> m;
+        vector<pair<ll, ll>> v[n];
+        f(i, m)
+        {
+            cin >> a >> b >> c;
+            v[a].push_back({c, b});
+        }
+        vll d(n, inf);
+        d[0] = 0;
+        f(j, n)
+        {
+            f(k, n)
+            {
+                f(i, v[k].size())
+                {
+                    if (d[v[k][i].second] > d[k] + v[k][i].first)
+                        d[v[k][i].second] = d[k] + v[k][i].first;
+                }
+            }
+        }
+        bool bo = false;
+        f(i, n)
+        {
+            f(j, v[i].size())
+            {
+                if (d[v[i][j].second] > d[i] + v[i][j].first)
+                {
+                    bo = true;
+                    i = n;
+                    break;
+                }
+            }
+        }
+        if (bo)
+        {
+            cout << "Negetive Cycle available" << endl;
+        }
+        else
+        {
+            cout << "Negetive Cycle not available" << endl;
+        }

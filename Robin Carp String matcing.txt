@@ -1,0 +1,71 @@
+string s, st;
+	map<bool, ll>mi;
+	cin >> s >> st;
+	ll sm = 0;
+	ll bi = 0;
+	ll mu = 1;
+	for (i = 0; i < s.size(); i++)
+	{
+		sm = sm + ((ll)s[i] % 96) * mu;
+		bi = bi + ((ll)st[i] % 96) * mu;
+		sm = sm % mod;
+		bi = bi % mod;
+		if(i+1!=s.size())
+		   mu= mu * 29;
+	}
+	ll sl = s.size();
+	ll bl = st.size();
+	bool pro = false;
+	if (sm == bi)
+	{
+		f(i, sl)
+		{
+			if (s[i] != st[i])
+			{
+				pro = false;
+				break;
+			}
+			else
+				pro = true;
+		}
+	}
+	if (pro)
+	{
+		mi[true]++;
+		pro = false;
+	}
+	mu = powl(29, sl - 1);//Think about using two hash function and use pair
+	mu = mu % mod;       //It will be usefull in many case
+	ll x,y;             //of course use modulus inverse
+	ll tmp=exgcd(29,mod,&x,&y);
+	x=((x%mod)+mod)%mod;
+	for (i = sl; i < bl; i++)
+	{
+		bi = bi - ((ll)st[i - sl] % 96);
+		bi=(bi*x)%mod;
+		bi = bi + ((ll)st[i] % 96) * mu;
+		bi = bi % mod;
+		if (bi == sm)
+		{
+			ll l = 0;
+			for (k = i - sl + 1; k <= i; k++)
+			{
+				if (s[l++] != st[k])
+				{
+					pro = false;
+					break;
+				}
+				else
+					pro = true;
+			}
+			if (pro)
+			{
+				mi[true]++;
+				pro = false;
+			}
+		}
+	}
+	if (mi[true])
+		cout << "YES" << " " << mi[true] << endl;
+	else
+		cout << "NO" << endl;

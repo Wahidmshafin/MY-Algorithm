@@ -1,0 +1,40 @@
+class DSU
+{
+public:
+    vll id, si;
+    DSU(ll n)
+    {
+        for (ll i = 0; i < n; i++)
+        {
+            id.push_back(i);
+            si.push_back(1);
+        }
+    }
+    ll find_root(ll i)
+    {
+        while (i != id[i])
+        {
+            id[i] = id[id[i]];
+            i = id[i];
+        }
+        return i;
+    }
+    void add(ll i, ll j) // here i and j are the root.
+    {
+        i = find_root(i);
+        j = find_root(j);
+        if (i != j)
+        {
+            if (si[i] < si[j])
+            {
+                id[i] = j;
+                si[j] += si[i];
+            }
+            else
+            {
+                id[j] = i;
+                si[i] += si[j];
+            }
+        }
+    }
+};

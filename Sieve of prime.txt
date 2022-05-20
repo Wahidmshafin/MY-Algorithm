@@ -1,0 +1,24 @@
+bool arr[50050];
+vector<long long int>v;
+void sieve()
+{
+    long long int a,b,c,i,j,k;
+    v.push_back(2);
+    for(i=3;i*i<=50000;i=i+2)
+    {
+        if(arr[i]==false)
+        {
+            v.push_back(i);
+            for(j=i*i;j<=50000;j=j+(2*i))
+            {
+                arr[j]=true;
+            }
+        }
+    }
+    for(;i<=50000;i=i+2)
+    {
+        if(arr[i]==false)
+            v.push_back(i);
+    }
+
+}

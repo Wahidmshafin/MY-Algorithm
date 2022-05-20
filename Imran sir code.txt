@@ -1,0 +1,116 @@
+// A utility function to create a new BST node
+struct node *newNode(int item)
+#include<stdio.h>
+#include<stdlib.h>
+struct Bstnode
+{
+    int key;
+    struct Bstnode *right,*left;
+};
+struct Bstnode *Newnode(int item)
+{
+    struct Bstnode *temp=malloc(sizeof(struct Bstnode));
+    temp->key=item;
+    temp->right=NULL;
+    temp->left=NULL;
+    return temp;
+};
+struct Bstnode *insert(struct Bstnode *node,int item)
+{
+    if(node==NULL)
+        return Newnode(item);
+    else if(node->key>item)
+        node->left=insert(node->left,item);
+    else
+        node->right=insert(node->right,item);
+    return node;
+};
+int search(struct Bstnode* root,int data)
+{
+    if(root==NULL)
+        return 0;
+    else if(root->key==data)
+        return 1;
+    else if(data<root->key)
+        return(root->left,data);
+    else
+        return(root->right,data);
+}
+
+int main()
+{
+    struct Bstnode *root=NULL;
+    root=insert(root,30);
+    insert(root,90);
+    insert(root,10);
+    insert(root,35);
+    insert(root,50);
+    insert(root,80);
+    int num;
+    scanf("%d",&num);
+    if(search(root,num)==1)
+        printf("Found it\n");
+    else
+        printf("Didnt found it\n");
+    return 0;
+}
+
+
+
+#include<stdio.h>
+void Genericswap(char *tb,char *ta,int len)
+{
+    char c;
+    while(len--)
+    {
+        c=*ta;
+        *ta=*tb;
+        *tb=c;
+        *ta++;
+        *tb++;
+    }
+}
+int compareint(void *a,void *b)
+{
+    if(*(int *)a< *(int *)b)
+        return 0;
+    else
+        return 1;
+}
+int comparefloat(void *a,void *b)
+{
+    if(*(float *)a< *(float *)b)
+        return 0;
+    else
+        return 1;
+}
+int comparechar(void *a,void *b)
+{
+    if(*(char *)a< *(char *)b)
+        return 0;
+    else
+        return 1;
+}
+void GenArraysort(void *a,int nelement,int size,int(*comp)(void *,void *))
+{
+    int i,j,k;
+    char *cp=a;
+    for(i=0;i<nelement;i++)
+    {
+        for(j=0;j<nelement-i-1;j++)
+        {
+            void *l1=cp+j;
+            void *l2=cp+(j+1);
+            if(comp(l1,l2))
+                Genericswap(l1,l2,size);
+        }
+    }
+}
+int main()
+{
+    char a[5]={'c','a','o','l','f'};
+    GenArraysort(a,5,sizeof(a[0]),comparechar);
+    for(int i=0;i<5;i++)
+        printf("%c\n",a[i]);
+    return 0;
+}

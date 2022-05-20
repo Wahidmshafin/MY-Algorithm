@@ -1,0 +1,162 @@
+class Node // I will create the class by using Node *root=nullptr;
+{          // then insert value by, if(root==nullptr)
+           //root=new Node(val) else root=root.insertNode(val)
+    ll key;
+    Node *left, *right;
+    ll height;
+    ll count_node;
+
+    ll getBalance()
+    {
+        return (((left == nullptr) ? 0 : left->height) - ((right == nullptr) ? 0 : right->height));
+    }
+    ll get_height()
+    {
+        return max((left == nullptr) ? 0 : left->height, (right == nullptr) ? 0 : right->height) + 1;
+    }
+    Node *left_rotation()
+    {
+        Node *l = left;
+        left = l->right;
+        height = get_height();
+        l->right = this;
+
+        l->height = l->get_height();
+
+        return l;
+    }
+    Node *right_rotation()
+    {
+        Node *r = right;
+        right = r->left;
+
+        height = get_height();
+        r->left = this;
+        r->height = r->get_height();
+        return r;
+    }
+
+public:
+    Node(ll val)
+    {
+        key = val;
+        left = nullptr;
+        right = nullptr;
+        height = 1;
+        count_node = 1;
+    }
+    Node *find_node(ll val)
+    {
+        if (val == key)
+        {
+            return this;
+        }
+        else if (val < key)
+        {
+            if (left == nullptr)
+            {
+                return left;
+            }
+            else
+            {
+                return left->find_node(val);
+            }
+        }
+        else
+        {
+            if (right == nullptr)
+            {
+                return right;
+            }
+            else
+            {
+                return right->find_node(val);
+            }
+        }
+    }
+    Node *insertNode(ll val)
+    {
+        if (val == key)
+        {
+            count_node++;
+        }
+        else if (val < key)
+        {
+            if (left == nullptr)
+            {
+                left = new Node(val);
+            }
+            else
+            {
+                left = left->insertNode(val);
+            }
+        }
+        else
+        {
+            if (right == nullptr)
+            {
+                right = new Node(val);
+            }
+            else
+            {
+                right = right->insertNode(val);
+            }
+        }
+        height = get_height();
+        ll bf = getBalance();
+        if (bf < -1)
+        {
+            if (right->key < val)
+            {
+                return right_rotation();
+            }
+            else
+            {
+                right = right->left_rotation();
+                //preorder();
+                cout << endl;
+                return right_rotation();
+            }
+        }
+        else if (bf > 1)
+        {
+            if (left->key >= val)
+            {
+                return left_rotation();
+            }
+            else
+            {
+                left = left->right_rotation();
+                return left_rotation();
+            }
+        }
+        else
+        {
+            return this;
+        }
+    }
+    void inorder()
+    {
+        if (left != nullptr)
+        {
+            left->inorder();
+        }
+        cout << key << " ";
+        if (right != nullptr)
+        {
+            right->inorder();
+        }
+    }
+    void iterate(vector<Node*> &vt) // You can iterate over all element. But if you want to do over some element
+    {                            // You should create some other function
+        if (left != nullptr)
+        {
+            left->iterate(vt);
+        }
+        vt.push_back(this);
+        if (right != nullptr)
+        {
+            right->iterate(vt);
+        }
+    }
+};

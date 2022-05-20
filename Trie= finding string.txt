@@ -1,0 +1,90 @@
+class Trie
+{
+public:
+    bool leaf;
+    map<char, Trie *> children; // creating the childs
+    Trie()                      // Default Constructor
+    {
+        leaf = false;
+    }
+    void insert(string);
+    bool search(string);
+    //bool deletion(Trie &, string);
+    bool prefix_Search(string);
+};
+void Trie::insert(string s) //Insert in trie
+{
+    Trie *cur = this; // pointer to traverse in trie
+    ll i, j, k;
+    for (i = 0; i < s.size(); i++)
+    {
+        if (cur->children[s[i]] == nullptr)
+        {
+            cur->children[s[i]] = new Trie(); // If the node isn't created
+        }
+        cur = cur->children[s[i]];
+    }
+    cur->leaf = true; //Endpoint
+}
+
+bool Trie::search(string s) // To test if a string is available in Trie
+{
+    Trie *cur = this;
+    if (cur == nullptr)
+    {
+        return false;
+    }
+    ll i, j;
+    for (i = 0; i < s.size(); i++)
+    {
+        if (cur->children[s[i]] == nullptr)
+        {
+            return false;
+        }
+        else
+        {
+            cur = cur->children[s[i]];
+        }
+    }
+    return cur->leaf;
+}
+
+bool Trie::prefix_Search(string s)
+{
+    Trie *cur = this;
+    string pstring = ""; //for returning prefix string
+    if (cur == nullptr)
+    {
+        return false;
+        //pstring; // for returning the prefix
+    }
+    ll i, j;
+    for (i = 0; i < s.size(); i++)
+    {
+        if (cur->children[s[i]] == nullptr)
+        {
+            return false;
+            //break; // for prefix
+        }
+        else
+        {
+            //pstring = pstring + s[i];
+            cur = cur->children[s[i]];
+        }
+    }
+    return true;
+}
+
+void deletion(Trie *root)//You have to clear the tree....or you will get memory limit.
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    for (auto it : root->children)
+    {
+        deletion(it.second);
+        delete (it.second);
+    }
+    root->children.clear();
+}

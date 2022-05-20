@@ -1,0 +1,32 @@
+cin >> n;
+    vll node[n];
+    vll cost[n];
+    priority_queue<pair<ll, ll>> q;
+    vll d(n, inf);
+    f(i, n - 1)
+    {
+        cin >> a >> b >> c;
+        a--;
+        b--;
+        node[a].push_back(b);
+        node[b].push_back(a);
+        cost[a].push_back(c);
+        cost[b].push_back(c);
+    }
+    cin >> l >> m;
+    d[m - 1] = 0;// here m is the source
+    q.push({0, m - 1});
+    while (!q.empty())
+    {
+        pair<ll, ll> p = q.top();
+        q.pop();
+        ll u = p.second;
+        f(i, node[u].size())
+        {
+            if (d[node[u][i]] > d[u] + cost[u][i])
+            {
+                d[node[u][i]] = d[u] + cost[u][i];
+                q.push({-cost[u][i], node[u][i]});
+            }
+        }
+    }

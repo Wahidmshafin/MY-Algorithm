@@ -1,0 +1,44 @@
+ll Prims(ll n, vector<pair<ll, ll>> node[]) // n=node number
+{
+    ll i, j, k;
+    ll no_edge = 0;
+    priority_queue<pair<ll, pair<ll, ll>>> q;
+    vector<bool> selected(n, false);
+    selected[0] = true;
+    ll cost = 0;
+    f(i, node[0].size())
+    {
+        q.push({-node[0][i].second, {0, node[0][i].first}});
+    }
+    while (!q.empty() && no_edge < n - 1)
+    {
+        pair<ll, pair<ll, ll>> p = q.top();
+        q.pop();
+        ll co = -p.first;
+        ll u = p.second.first;
+        ll v = p.second.second;
+        if (selected[v] == true)
+        {
+            continue;
+        }
+        cout << u << " - " << v << " ->" << co << endl;
+        cost = cost + co;
+        selected[v] = true;
+        no_edge++;
+        for (i = 0; i < node[v].size(); i++)
+        {
+            if (selected[node[v][i].first] == false)
+            {
+                q.push({-node[v][i].second, {v, node[v][i].first}});
+            }
+        }
+    }
+    if (no_edge < n - 1)
+    {
+        return inf;
+    }
+    else
+    {
+        return cost;
+    }
+}
